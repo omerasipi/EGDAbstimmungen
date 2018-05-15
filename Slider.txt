@@ -1,0 +1,146 @@
+//HTML Code
+<div class="container">
+  <input type="range" max="2017" min="1981" style="width:100%" step="1" value="2000">
+  <div class="input-range-value-container"></div>
+</div>
+<div id="number">
+<input type="number" min="1981" max="2017" step="1" style="margin-top:10px; margin-left:125px;">
+</div>
+
+
+
+
+
+
+
+//CSS Code
+$grey: #6d6e71;
+
+
+.container {
+  max-width: 300px;
+}
+
+input[type=range] {
+    /*removes default webkit styles*/
+    -webkit-appearance: none;
+    
+    /*fix for FF unable to apply focus style bug */
+    border: 1px solid white;
+    
+    /*required for proper track sizing in FF*/
+    width: 300px;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 5px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: goldenrod;
+    margin-top: -4px;
+}
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #ccc;
+}
+
+input[type=range]::-moz-range-track {
+    width: 300px;
+    height: 5px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-moz-range-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: green;
+}
+
+/*hide the outline behind the border*/
+input[type=range]:-moz-focusring{
+    outline: 1px solid white;
+    outline-offset: -1px;
+}
+
+input[type=range]::-ms-track {
+    width: 300px;
+    height: 5px;
+    background: transparent;
+    
+    /*leave room for the larger thumb to overflow with a transparent border */
+    border-color: transparent;
+    border-width: 6px 0 6px 0;
+
+    /*remove default tick marks*/
+    color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+    background: #ccc;
+    border-radius: 10px;
+}
+input[type=range]::-ms-fill-upper {
+    background: #ccc;
+    border-radius: 10px;
+}
+input[type=range]::-ms-thumb {
+    border: 2px solid goldenrod;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background: #ccc;
+}
+input[type=range]:focus::-ms-fill-lower {
+    background: #ccc;
+}
+input[type=range]:focus::-ms-fill-upper {
+    background: #ccc;
+}
+
+input[type=range]::-ms-tooltip {
+    display: none;
+}
+
+.input-range-value-container {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5px;
+    margin-top: 0px;
+    color: $grey;
+    font-family: Verdana;
+    font-size: 12px;
+    &:before {
+      content: "1981";
+      position: absolute;
+      bottom: -10px;
+      margin-top: 0px;
+    }
+    &:after {
+      content: "2017";
+      position: absolute;
+      bottom: -10px;
+      right: -15px;
+      margin-top: 0px;
+    }
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .input-range-value-container {
+        margin-top: -30px;
+    }
+} 
