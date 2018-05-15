@@ -1,0 +1,9 @@
+div {
+    border: solid black 2px;
+}
+
+#titel {
+    text-align: center;
+    background: aqua;
+    padding-top: 20px;
+}
