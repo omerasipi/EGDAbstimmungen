@@ -10,6 +10,7 @@ div {
     text-align: center;
     background: #F7F7F9;
     padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .grau {
@@ -110,7 +111,9 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 #JahrBox {
-    border: none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }
 
 .floater {
