@@ -77,10 +77,10 @@ asyncCsv2Array("data/EGD.csv", ";", function(result) {
     // Ausgabe von "51.23424"
     //console.log(result[0][1]);
 
-    wahlenGen(removeSameColors(result));
+    wahlenGen(removeDuplicates(result));
 });
 
-function removeSameColors(marr){
+function removeDuplicates(marr){
     var carr = [];
     var rarr = [];
     var j = -1;
