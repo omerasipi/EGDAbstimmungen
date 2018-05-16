@@ -92,14 +92,15 @@ function removeDuplicates(marr){
 }
 //Abstimmungen nach Jahr darstellen...
 function WahlenJahrGen() {
+    document.getElementById("wahlen").options.length = 0;
     var jahr = document.getElementById("JahrBox").value;
-    var arr;
+    //var arr;
     asyncCsv2Array("data/EGD.csv", ";", function(result) {
-        arr = result;
+        wahlenGen(removeDuplicates(dateFilter(jahr, result)));
     });
-    //wahlenGen(removeDuplicates(dateFilter(jahr, arr)));
+
     //dateFilter(jahr,arr);
-    window.alert(filterByProperty(arr, 1, "14.06.1981"));
+    //window.alert(arr);
 }
 
 function dateFilter(date, arr) {
@@ -111,7 +112,7 @@ function dateFilter(date, arr) {
                 return item >= dateFrm && item <= datTo;
             });
 
-            window.alert(filtered);
+            return(filtered);
 
 
 
