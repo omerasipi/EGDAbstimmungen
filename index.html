@@ -20,7 +20,7 @@
     <h2>(Gemeinden)</h2>
 </div>
 <div class="weiss container my-4">
-        <input id="regler" type="range"  min="1981" max="2017" value="2000" oninput="JahrToBox(), wahlenGen()">
+        <input id="regler" type="range"  min="1981" max="2017" value="2000" oninput="JahrToBox(), WahlenJahrGen()">
         <br><br>
     <div>
         <div style="float: left;">
@@ -31,7 +31,7 @@
         </div>
     </div>
     <div class="floater">
-        <div class="miti"><input id="JahrBox" type="text" value="2000" id="jahr" size="2" oninput="BoxToJahr(), wahlenGen()"></div>
+        <div class="miti"><input id="JahrBox" type="text" value="2000" id="jahr" size="2" oninput="BoxToJahr(), WahlenJahrGen()"></div>
     </div>
     <div class="floater">
         <select id="wahlen"></select>

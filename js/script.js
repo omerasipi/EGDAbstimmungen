@@ -17,28 +17,29 @@ $(function() {
 });
 
 function JahrToBox() {
+    //Schieberegler zu Eingabefeld
     document.getElementById("JahrBox").value = document.getElementById("regler").value;
 
 }
 
 function BoxToJahr() {
+    //EIngabefeld zu Schieberegler
     document.getElementById("regler").value = document.getElementById("JahrBox").value;
 }
 
 function wahlenGen(arr) {
     var selektor = document.getElementById("wahlen");
-        //Array muss mit csv reader ergänzt werden
+    //Alphabetische Sortierung
+    arr = arr.sort();
 
-
-    //Cleaner um alle Optionen zu entfernen
-    //selektor.options.length = 0;
     //Generator damit Optionen da sind
-    for (var i = 1; i < arr.length; i++) {
+    for (var i = 0; i < arr.length; i++) {
         var option = document.createElement("OPTION"),
             txt = document.createTextNode(arr[i]);
         option.appendChild(txt);
 
-        if (arr[i] != null) {
+        //Um leere oder nicht benötigte Werte zu vermeiden
+        if (arr[i] != null && arr[i] != "VORLAGE_BEZEICHNUNG") {
             selektor.insertBefore(option, selektor.lastChild);
         }
 
@@ -69,18 +70,13 @@ function asyncCsv2Array(fileName, separator, callback) {
     }); // Ende von $.get Aufruf
 } // Ende function asyncCsv2Array
 
-// Beispielaufruf
-asyncCsv2Array("data/EGD.csv", ";", function(result) {
-    //console.log(result);
-    // Ausgabe von "Dracula"
-    //console.log(result[0][0]);
-    // Ausgabe von "51.23424"
-    //console.log(result[0][1]);
 
+asyncCsv2Array("data/EGD.csv", ";", function(result) {
     wahlenGen(removeDuplicates(result));
 });
 
 function removeDuplicates(marr){
+    //Array doppelte Werte remover
     var carr = [];
     var rarr = [];
     var j = -1;
@@ -93,4 +89,51 @@ function removeDuplicates(marr){
     }
 
     return(rarr);
+}
+//Abstimmungen nach Jahr darstellen...
+function WahlenJahrGen() {
+    var jahr = document.getElementById("JahrBox").value;
+    var arr;
+    asyncCsv2Array("data/EGD.csv", ";", function(result) {
+        arr = result;
+    });
+    //wahlenGen(removeDuplicates(dateFilter(jahr, arr)));
+    //dateFilter(jahr,arr);
+    window.alert(filterByProperty(arr, 1, "14.06.1981"));
+}
+
+function dateFilter(date, arr) {
+    var dateFrm = "01.01." + date;
+    var datTo = "31.12." + date;
+
+
+            var filtered = arr.filter(function(item){
+                return item >= dateFrm && item <= datTo;
+            });
+
+            window.alert(filtered);
+
+
+
+}
+
+function filterByProperty(array, prop, value){
+    var filtered = [];
+    for(var i = 0; i < array.length; i++){
+
+        var obj = array[i];
+
+        for(var key in obj){
+            if(typeof(obj[key] == "object")){
+                var item = obj[key];
+                if(item[prop] == value){
+                    filtered.push(item);
+                }
+            }
+        }
+
+    }
+
+    return filtered;
+
 }
