@@ -29,17 +29,16 @@ function wahlenGen(arr) {
     var selektor = document.getElementById("wahlen");
         //Array muss mit csv reader ergänzt werden
 
-     // You can define the comparing function here.
-    // JS by default uses a crappy string compare.
+
     //Cleaner um alle Optionen zu entfernen
     //selektor.options.length = 0;
     //Generator damit Optionen da sind
-    for (var i = 1; i < 50; i++) {
+    for (var i = 1; i < arr.length; i++) {
         var option = document.createElement("OPTION"),
-            txt = document.createTextNode(arr[i][1]);
+            txt = document.createTextNode(arr[i]);
         option.appendChild(txt);
 
-        if (arr[i][1] != null) {
+        if (arr[i] != null) {
             selektor.insertBefore(option, selektor.lastChild);
         }
 
@@ -78,12 +77,21 @@ asyncCsv2Array("data/EGD.csv", ";", function(result) {
     // Ausgabe von "51.23424"
     //console.log(result[0][1]);
 
-    removeDuplicateUsingFilter(result);
+    removeSameColors(result);
 });
 
-function removeDuplicateUsingFilter(arr){
-    let unique_array = arr.filter(function(elem, index, self) {
-        return index == self.indexOf(elem);
-    });
-    wahlenGen(unique_array);
+function removeSameColors(marr){
+    var carr = [];
+    var rarr = [];
+    var j = -1;
+
+    for(var i = 0, l = marr.length; i < l; i++){
+        if(carr[marr[i][1]] !== true){
+            carr[marr[i][1]] = true;
+            rarr[++j] = marr[i][1];
+        }
+    }
+
+    //return(rarr);
+    wahlenGen(rarr);
 }
