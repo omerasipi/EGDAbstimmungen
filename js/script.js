@@ -82,9 +82,9 @@ function removeDuplicates(marr){
     var j = -1;
 
     for(var i = 0, l = marr.length; i < l; i++){
-        if(carr[marr[i][1]] !== true){
-            carr[marr[i][1]] = true;
-            rarr[++j] = marr[i][1];
+        if(carr[marr[i]] !== true){
+            carr[marr[i]] = true;
+            rarr[++j] = marr[i];
         }
     }
 
@@ -96,25 +96,25 @@ function WahlenJahrGen() {
     var jahr = document.getElementById("JahrBox").value;
     //var arr;
     asyncCsv2Array("data/EGD.csv", ";", function(result) {
-        wahlenGen(removeDuplicates(dateFilter(jahr, result)));
-    });
+        wahlenGen(removeDuplicates(dateFilter(jahr,result)));
 
-    //dateFilter(jahr,arr);
-    //window.alert(arr);
+    });
 }
 
 function dateFilter(date, arr) {
-    var dateFrm = "01.01." + date;
-    var datTo = "31.12." + date;
+    //Datumsfilter
+    var dateFrm = date + ".01.01";
+    var dateTo = date + ".12.31";
 
+    var gefiltert = [];
 
-            var filtered = arr.filter(function(item){
-                return item >= dateFrm && item <= datTo;
-            });
+    for (i = 0; i < arr.length; i++) {
+        if (arr[i][0] >= dateFrm && arr[i][0] <= dateTo) {
+            gefiltert.push(arr[i][1]);
+        }
+    }
 
-            return(filtered);
-
-
+    return(gefiltert);
 
 }
 
