@@ -131,3 +131,8 @@ input[type=range]:focus::-ms-fill-upper {
     background-color: #F7F7F9;
     margin-top: 10px;
 }
+
+#wappenBild {
+    max-height: 200px;
+    max-width: 200px;
+}

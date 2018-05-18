@@ -34,7 +34,8 @@
         </div>
     </div>
     <div class="floater">
-        <div class="miti"><input id="JahrBox" type="text" value="2000" size="2" oninput="BoxToJahr(), WahlenJahrGen()"></div>
+        <div class="miti"><input id="JahrBox" type="text" value="2000" size="2" oninput="BoxToJahr(), WahlenJahrGen(), validateInput()"></div>
+        <p id="alarm" style="display:none;color:red;">Geben sie nur ein Jahr zwischen 1981 und 2017 ein!</p>
     </div>
     <div class="floater">
         <select id="wahlen" class="dropdown"><option>Abstimmung</option></select>
@@ -43,12 +44,13 @@
 
 <div class="grau">
     <div class="container my-4">
-        <div>
+        <div style="margin-bottom: 20px;">
             <p style="margin-bottom: 0;">Gemeinde:</p>
             <select id="gemeinde" class="dropdown" oninput="drawChart()"></select>
         </div>
-        <div id="chart_div" style="float:left;"></div>
-        <div style="float:left;display: none;" id="wappen">Wappen</div>
+        <div id="chart_div" style="float:left;margin-right: 20px;"></div>
+        <div style="float:left;display: none;margin-top: 30px;" id="wappen"><img id="wappenBild" alt="Gemeinde Wappen"></div>
+        <div style="float:left;margin-left: 10px;margin-top: 30px;" id="infos"><p id="infoText">Vorlagebezeichnung:</p></div>
         <div style="clear:both"></div>
     </div>
 </div>

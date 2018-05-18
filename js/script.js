@@ -154,6 +154,7 @@ function dataFilterChart(date, arr, abstimmung, gemeinde) {
     var dateTo = date + ".12.31";
 
     var gefiltert = [[],[],[]];
+    var art = [];
 
     for (i = 0; i < arr.length; i++) {
         if (arr[i][0] >= dateFrm && arr[i][0] <= dateTo && arr[i][1] == abstimmung && arr[i][7] == gemeinde) {
@@ -163,8 +164,12 @@ function dataFilterChart(date, arr, abstimmung, gemeinde) {
             gefiltert[1].push(arr[i][13]);
             //Nein Stimmen
             gefiltert[2].push(arr[i][14]);
+            //Vorlageart
+            art.push(arr[i][3]);
         }
     }
+
+    document.getElementById("infoText").innerHTML = "Vorlagebezeichnung: " + art[0];
 
     return(gefiltert);
 
@@ -184,30 +189,60 @@ function StimmenGen() {
         data.addColumn('string', 'StimmOption');
         data.addColumn('number', 'AnzStimmen');
         console.log(arr);
-        data.addRows([
-            ['Ungueltige',Number(arr[0][0])],
-            ['Ja',Number(arr[1][0])],
-            ['Nein',Number(arr[2][0])],
-        ]);
+        if (arr[1][0] != null) {
+            data.addRows([
+                ['Ungueltige',Number(arr[0][0])],
+                ['Ja',Number(arr[1][0])],
+                ['Nein',Number(arr[2][0])],
+            ]);
+            // Set chart options
+            var options = {'title':'Stimmen',
+                pieHole: 0.4,
+                backgroundColor: '#F7F7F9',
+                'width':400,
+                'height':300};
+
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+        else {
+            document.getElementById("chart_div").innerHTML = "Keine Stimminformationen verfügbar!";
+        }
 
 
 
-        // Set chart options
-        var options = {'title':'Stimmen',
-            pieHole: 0.4,
-            backgroundColor: '#F7F7F9',
-            'width':400,
-            'height':300};
 
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
 
         document.getElementById("wappen").style.display = "block";
+        wappenGen(gemeinde);
 
     });
 
 
+
+}
+
+function validateInput() {
+    var selekt = document.getElementById("JahrBox").value;
+
+    var alarm = document.getElementById("alarm");
+    if (!(selekt >= 1981 && selekt <= 2017)) {
+        alarm.style.display = "block";
+    }
+    else {
+        alarm.style.display = "none";
+    }
+}
+
+
+function wappenGen(gemeinde) {
+    if (gemeinde != "Auslandschweizer") {
+        document.getElementById("wappenBild").src = "img/gemeinden/"+ gemeinde +".png";
+    }
+    else {
+        document.getElementById("wappen").style.display = "none";
+    }
 
 }
 
