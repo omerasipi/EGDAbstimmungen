@@ -1,4 +1,7 @@
-$(function() {
+// Load the Visualization API and the corechart package.
+google.charts.load('current', {'packages':['corechart']});
+
+(function() {
     $('input').filter( function(){return this.type == 'range' } ).each(function(){
         var $slider = $(this),
             $text_box = $('#'+$(this).attr('link-to'));
@@ -71,10 +74,6 @@ function asyncCsv2Array(fileName, separator, callback) {
 } // Ende function asyncCsv2Array
 
 
-asyncCsv2Array("data/EGD.csv", ";", function(result) {
-    wahlenGen(removeDuplicates(result));
-});
-
 function removeDuplicates(marr){
     //Array doppelte Werte remover
     var carr = [];
@@ -94,10 +93,31 @@ function removeDuplicates(marr){
 function WahlenJahrGen() {
     document.getElementById("wahlen").options.length = 0;
     var jahr = document.getElementById("JahrBox").value;
-    //var arr;
+
     asyncCsv2Array("data/EGD.csv", ";", function(result) {
         wahlenGen(removeDuplicates(dateFilter(jahr,result)));
 
+    });
+}
+
+function GemeindenGen() {
+    var selektor = document.getElementById("gemeinde");
+
+    var arr = [];
+    asyncCsv2Array("data/EGD.csv", ";", function(result) {
+        arr = removeDuplicates(ArrFilter(result, 7)).sort();
+        arr.unshift("Alle")
+
+        for (var i = 0; i < arr.length; i++) {
+            var option = document.createElement("OPTION"),
+                txt = document.createTextNode(arr[i]);
+            option.appendChild(txt);
+
+            //Um leere oder nicht benötigte Werte zu vermeiden
+            if (arr[i] != null && arr[i] != "GEMEINDE_NAME") {
+                selektor.insertBefore(option, selektor.lastChild);
+            }
+        }
     });
 }
 
@@ -118,23 +138,106 @@ function dateFilter(date, arr) {
 
 }
 
-function filterByProperty(array, prop, value){
-    var filtered = [];
-    for(var i = 0; i < array.length; i++){
+function ArrFilter(arr,index){
+    var gefiltert = [];
+    for (i = 1; i < arr.length; i++) {
+        gefiltert.push(arr[i][index]);
+    }
+    return(gefiltert);
+}
 
-        var obj = array[i];
+ GemeindenGen();
 
-        for(var key in obj){
-            if(typeof(obj[key] == "object")){
-                var item = obj[key];
-                if(item[prop] == value){
-                    filtered.push(item);
-                }
-            }
+function dataFilterChart(date, arr, abstimmung, gemeinde) {
+    //Datumsfilter
+    var dateFrm = date + ".01.01";
+    var dateTo = date + ".12.31";
+
+    var gefiltert = [[],[],[]];
+
+    for (i = 0; i < arr.length; i++) {
+        if (arr[i][0] >= dateFrm && arr[i][0] <= dateTo && arr[i][1] == abstimmung && arr[i][7] == gemeinde) {
+            //Ungueltige Stimmen
+            gefiltert[0].push(arr[i][11]);
+            //Ja Stimmen
+            gefiltert[1].push(arr[i][13]);
+            //Nein Stimmen
+            gefiltert[2].push(arr[i][14]);
         }
-
     }
 
-    return filtered;
+    return(gefiltert);
 
+}
+
+function StimmenGen() {
+    var abstimmung = document.getElementById("wahlen").value;
+    var gemeinde = document.getElementById("gemeinde").value;
+    var jahr = document.getElementById("JahrBox").value
+
+    var arr = [];
+
+    asyncCsv2Array("data/EGD.csv", ";", function(result) {
+        arr = dataFilterChart(jahr,result, abstimmung, gemeinde);
+        //console.log(arr);
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'StimmOption');
+        data.addColumn('number', 'AnzStimmen');
+        console.log(arr);
+        data.addRows([
+            ['Ungueltige',Number(arr[0][0])],
+            ['Ja',Number(arr[1][0])],
+            ['Nein',Number(arr[2][0])],
+        ]);
+
+
+
+        // Set chart options
+        var options = {'title':'Stimmen',
+            pieHole: 0.4,
+            backgroundColor: '#F7F7F9',
+            'width':400,
+            'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+
+        document.getElementById("wappen").style.display = "block";
+
+    });
+
+
+
+}
+
+
+
+// Set a callback to run when the Google Visualization API is loaded.
+//google.charts.setOnLoadCallback(drawChart);
+
+// Callback that creates and populates a data table,
+// instantiates the pie chart, passes in the data and
+// draws it.
+function drawChart() {
+
+    // Create the data table.
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'StimmOption');
+    data.addColumn('number', 'AnzStimmen');
+    var daten = StimmenGen();
+    console.log(daten);
+    for (i = 0; i < daten.length; i++) {
+        data.addRows([daten[i]]);
+    }
+
+
+    // Set chart options
+    var options = {'title':'Stimmen',
+        'width':400,
+        'height':300};
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
 }
