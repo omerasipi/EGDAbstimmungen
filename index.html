@@ -1,11 +1,12 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <title>EGD Abstimmungen</title>
+    <link rel="icon" href="img/thurgauicon.ico" type="img/png" sizes="16x16">
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Title</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
           integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -23,7 +24,7 @@
     <h2>(Gemeinden)</h2>
 </div>
 <div class="weiss container my-4">
-        <input id="regler" type="range"  min="1981" max="2017" value="2000" oninput="JahrToBox(), WahlenJahrGen()">
+        <input id="regler" type="range"  min="1981" max="2017" value="2000" onchange="JahrToBox(), WahlenJahrGen(), validateInput(), drawChartDelay()" oninput="JahrToBox(), WahlenJahrGen(), validateInput(), drawChartDelay()">
         <br><br>
     <div>
         <div style="float: left;">
@@ -34,11 +35,11 @@
         </div>
     </div>
     <div class="floater">
-        <div class="miti"><input id="JahrBox" type="text" value="2000" size="2" oninput="BoxToJahr(), WahlenJahrGen(), validateInput()"></div>
+        <div class="miti"><input id="JahrBox" type="text" value="2000" size="2" onchange="JahrToBox(), WahlenJahrGen(), validateInput(), drawChartDelay()" oninput="BoxToJahr(), WahlenJahrGen(), validateInput(), drawChartDelay()" onblur="validateInput()"></div>
         <p id="alarm" style="display:none;color:red;">Geben sie nur ein Jahr zwischen 1981 und 2017 ein!</p>
     </div>
     <div class="floater">
-        <select id="wahlen" class="dropdown"><option>Abstimmung</option></select>
+        <select id="wahlen" class="dropdown" onchange="drawChart()" oninput="drawChart()"><option>Abstimmung</option></select>
     </div>
 </div>
 
@@ -46,7 +47,7 @@
     <div class="container my-4">
         <div style="margin-bottom: 20px;">
             <p style="margin-bottom: 0;">Gemeinde:</p>
-            <select id="gemeinde" class="dropdown" oninput="drawChart()"></select>
+            <select id="gemeinde" class="dropdown" onchange="drawChart()" oninput="drawChart()"></select>
         </div>
         <div id="chart_div" style="float:left;margin-right: 20px;"></div>
         <div style="float:left;display: none;margin-top: 30px;" id="wappen"><img id="wappenBild" alt="Gemeinde Wappen"></div>
