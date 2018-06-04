@@ -175,6 +175,14 @@ function dataFilterChart(date, arr, abstimmung, gemeinde) {
 
 }
 
+function drawChartDelay() {
+    var delayInMilliseconds = 50; //1 second
+
+    setTimeout(function() {
+        drawChart()
+    }, delayInMilliseconds);
+}
+
 function StimmenGen() {
     var abstimmung = document.getElementById("wahlen").value;
     var gemeinde = document.getElementById("gemeinde").value;
