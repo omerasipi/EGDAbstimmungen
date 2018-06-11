@@ -136,3 +136,8 @@ input[type=range]:focus::-ms-fill-upper {
     max-height: 200px;
     max-width: 200px;
 }
+
+#titel img{
+    width: 140px;
+    height: 100%;
+}

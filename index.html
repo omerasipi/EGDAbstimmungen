@@ -20,8 +20,12 @@
 </head>
 <body>
 <div id="titel">
-    <h1>Eidgenössische Abstimmungen</h1>
-    <h2>(Gemeinden)</h2>
+    <div style="widht: 33%;display:inline-block"></div>
+    <div style="widht: 33%;display:inline-block">
+        <h1>Eidgenössische Abstimmungen</h1>
+        <h2>(Gemeinden)</h2>
+    </div>
+    <div style="widht: 33%;display:inline-block"><img src="img/tglogo_nurloewe.png" id="titelBild"></div>
 </div>
 <div class="weiss container my-4">
         <input id="regler" type="range"  min="1981" max="2017" value="2000" onchange="JahrToBox(), WahlenJahrGen(), validateInput(), drawChartDelay()" oninput="JahrToBox(), WahlenJahrGen(), validateInput(), drawChartDelay()">
