@@ -270,7 +270,7 @@ function wappenGen(gemeinde) {
 // Callback that creates and populates a data table,
 // instantiates the pie chart, passes in the data and
 // draws it.
-function drawChart() {
+function drawChart () {
 
     if (document.getElementById("gemeinde").value != "Alle") {
         // Create the data table.

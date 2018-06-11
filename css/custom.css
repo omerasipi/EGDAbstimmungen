@@ -15,6 +15,7 @@ div {
 
 .grau {
     background-color: #F7F7F9;
+    height:100%;
 }
 
 .weiss {
@@ -140,4 +141,11 @@ input[type=range]:focus::-ms-fill-upper {
 #titel img{
     width: 140px;
     height: 100%;
+}
+
+footer {
+    background-color: #ffffff;
+    height: 100%;
+    text-align: center;
+    font-size: 12px;
 }
