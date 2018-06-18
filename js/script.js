@@ -169,10 +169,26 @@ function dataFilterChart(date, arr, abstimmung, gemeinde) {
         }
     }
 
-    document.getElementById("infoText").innerHTML = "Vorlagebezeichnung: " + art[0];
+    if (art[0] != "undefined") {
+        document.getElementById("infoText").innerHTML = "Vorlagebezeichnung: " + art[0];
+    }
+    else {
+        document.getElementById("infoText").style.display = "none";
+    }
+
 
     return(gefiltert);
 
+}
+
+function drawChartDelay() {
+    var delayInMilliseconds = 50; //1 second
+
+    setTimeout(function() {
+        if (document.getElementById("gemeinde").value != "Alle") {
+            drawChart()
+        }
+    }, delayInMilliseconds);
 }
 
 function StimmenGen() {
@@ -254,25 +270,28 @@ function wappenGen(gemeinde) {
 // Callback that creates and populates a data table,
 // instantiates the pie chart, passes in the data and
 // draws it.
-function drawChart() {
+function drawChart () {
 
-    // Create the data table.
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'StimmOption');
-    data.addColumn('number', 'AnzStimmen');
-    var daten = StimmenGen();
-    console.log(daten);
-    for (i = 0; i < daten.length; i++) {
-        data.addRows([daten[i]]);
+    if (document.getElementById("gemeinde").value != "Alle") {
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'StimmOption');
+        data.addColumn('number', 'AnzStimmen');
+        var daten = StimmenGen();
+        console.log(daten);
+        for (i = 0; i < daten.length; i++) {
+            data.addRows([daten[i]]);
+        }
+
+
+        // Set chart options
+        var options = {'title':'Stimmen',
+            'width':400,
+            'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
     }
 
-
-    // Set chart options
-    var options = {'title':'Stimmen',
-        'width':400,
-        'height':300};
-
-    // Instantiate and draw our chart, passing in some options.
-    var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-    chart.draw(data, options);
 }

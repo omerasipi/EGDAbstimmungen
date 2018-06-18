@@ -15,6 +15,7 @@ div {
 
 .grau {
     background-color: #F7F7F9;
+    height:100%;
 }
 
 .weiss {
@@ -35,7 +36,7 @@ input[type=range]::-webkit-slider-runnable-track {
     cursor: pointer;
     animate: 0.2s;
     box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    background: #3071a9;
+    background: #288c2d;
     border-radius: 1.3px;
     border: 0.2px solid #010101;
 }
@@ -45,13 +46,13 @@ input[type=range]::-webkit-slider-thumb {
     height: 36px;
     width: 16px;
     border-radius: 3px;
-    background: #ffffff;
+    background: #FFFFFF;
     cursor: pointer;
     -webkit-appearance: none;
     margin-top: -14px;
 }
 input[type=range]:focus::-webkit-slider-runnable-track {
-    background: #367ebd;
+    background: #1e6021;
 }
 input[type=range]::-moz-range-track {
     width: 100%;
@@ -135,4 +136,16 @@ input[type=range]:focus::-ms-fill-upper {
 #wappenBild {
     max-height: 200px;
     max-width: 200px;
+}
+
+#titel img{
+    width: 140px;
+    height: 100%;
+}
+
+footer {
+    background-color: #ffffff;
+    height: 100%;
+    text-align: center;
+    font-size: 12px;
 }
